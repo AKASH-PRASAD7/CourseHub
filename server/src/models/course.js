@@ -59,10 +59,14 @@ const courseSchema = new mongoose.Schema({
       email: String,
     },
   ],
-  likes: {
-    type: Number,
-    default: 0,
-  },
+  likes: [
+    {
+      id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    },
+  ],
 });
 
 const Course = mongoose.model("Course", courseSchema);

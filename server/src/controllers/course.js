@@ -71,10 +71,19 @@ export const likeCourse = async (req, res) => {
         .json({ success: false, message: "Course not found" });
     }
 
-    course.likes += 1;
+    // Check if the user has already liked the course
+    if (course.likes.some((like) => like.id.toString() === userId)) {
+      return res.status(400).json({
+        success: false,
+        message: "Course is already liked by the user",
+      });
+    }
+
+    // Add the user's ID to the course's likes array
+    course.likes.push({ id: userId });
     await course.save();
 
-    return res.status(201).json({ success: true, data: course });
+    return res.status(201).json({ success: true, message: "Course liked" });
   } catch (error) {
     return res.status(500).json({ success: false, message: error.message });
   }

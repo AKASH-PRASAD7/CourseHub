@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema({
   name: {
@@ -9,6 +10,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, "Please enter email"],
     unique: [true, "Email already exists"],
+    validate: {
+      validator: function (v) {
+        return /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid email address!`,
+    },
   },
   password: {
     type: String,
@@ -28,6 +35,14 @@ const userSchema = new mongoose.Schema({
   ],
 });
 
-const User = mongoose.model("User", userSchema);
+//method
+userSchema.methods.generateJwtToken = function () {
+  try {
+    return jwt.sign({ user: this._id.toString() }, process.env.SECRET_KEY);
+  } catch (error) {
+    return error;
+  }
+};
 
+const User = mongoose.model("User", userSchema);
 export default User;
