@@ -61,7 +61,7 @@ const courseSchema = new mongoose.Schema({
   ],
   likes: [
     {
-      id: {
+      userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "User",
       },

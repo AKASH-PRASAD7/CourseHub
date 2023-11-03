@@ -5,11 +5,13 @@ import DbConnect from "./helper/DbConnect.js";
 import CourseApi from "./api/course.js";
 import UserApi from "./api/user.js";
 import AuthApi from "./api/auth.js";
+import cookieParser from "cookie-parser";
 dotenv.config();
 
 const app = Express();
 app.use(cors());
 app.use(Express.json());
+app.use(cookieParser());
 
 app.use((err, req, res, next) => {
   if (err instanceof SyntaxError) {
