@@ -9,6 +9,18 @@ const app = Express();
 app.use(cors());
 app.use(Express.json());
 
+app.use((err, req, res, next) => {
+  if (err instanceof SyntaxError) {
+    return res
+      .status(400)
+      .json({
+        success: false,
+        message: "Invalid JSON format in the request body",
+      });
+  }
+  next(err);
+});
+
 const PORT = process.env.PORT || 8000;
 
 app.get("/", (req, res) => {
