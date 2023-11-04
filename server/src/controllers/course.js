@@ -4,11 +4,21 @@ import Course from "../models/course.js";
 
 export const getCourse = async (req, res) => {
   try {
-    const allCourses = await Course.find();
-    if (!allCourses) {
-      return res.status(404).json({ message: "No course" });
+    const { page, limit } = req.query;
+    const startIndex = (Number(page) - 1) * Number(limit);
+    const total = await Course.countDocuments({});
+    const courses = await Course.find().limit(Number(limit)).skip(startIndex);
+    if (!courses) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No course found" });
     }
-    return res.status(200).json({ success: true, data: allCourses });
+    return res.status(200).json({
+      success: true,
+      data: courses,
+      totalPages: Math.ceil(total / Number(limit)),
+      currentPage: Number(page),
+    });
   } catch (err) {
     return res.status(500).json({ success: false, message: err.message });
   }
@@ -121,6 +131,47 @@ export const searchCourse = async (req, res) => {
   }
 };
 
+/* Get Enrolled Course */
+
+export const getEnrolledCourses = async (req, res) => {
+  try {
+    const courses = await Course.find();
+    const enrolledCourses = courses.filter((course) => {
+      if (course.students.length > 0) {
+        return course;
+      }
+    });
+    if (!enrolledCourses) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No course enrolled yet" });
+    }
+    return res.status(200).json({ success: true, data: enrolledCourses });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 /* Filter  Courses */
 
-export const filterCourse = async (req, res) => {};
+export const filterCourse = async (req, res) => {
+  try {
+    const { duration, enrollmentStatus, schedule } = req.body;
+    if (!duration && !enrollmentStatus && !schedule) {
+      throw new Error("At least one filter is required");
+    }
+    const courses = await Course.find(
+      { duration },
+      { enrollmentStatus },
+      { schedule }
+    );
+    if (courses?.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No course found" });
+    }
+    return res.status(200).json({ success: true, data: courses });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};

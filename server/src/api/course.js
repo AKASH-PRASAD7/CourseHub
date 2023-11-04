@@ -5,13 +5,15 @@ import {
   likeCourse,
   addCourse,
   searchCourse,
+  filterCourse,
+  getEnrolledCourses,
 } from "../controllers/course.js";
 import verifyCookie from "../middleware/verifyCookie.js";
 const router = Router();
 
 /**
- * Route     /api/course
- * Des       Get all courses
+ * Route     /api/course/?page=1&limit=5
+ * Des       Get all courses paginated
  * Params    none
  * Access    Public
  * Method    GET
@@ -60,14 +62,24 @@ router.put("/:courseId", verifyCookie, (req, res) => likeCourse(req, res));
 router.get("/search/:query", (req, res) => searchCourse(req, res));
 
 /**
- * Route     /api/course/filters:query
- * Des       Filter course by duration, open/closed, schedule
+ * Route     /api/course/enrolled/course
+ * Des       Get enrolled courses
  * Params    none
  * Access    Public
  * Method    GET
  */
 
-router.get("/filters/:query", (req, res) => filterCourse(req, res));
+router.get("/enrolled/course", (req, res) => getEnrolledCourses(req, res));
+
+/**
+ * Route     /api/course/filter/filters
+ * Des       Filter course by duration, enrollmentStatus, schedule
+ * Params    enrollmentStatus, schedule, duration
+ * Access    Public
+ * Method    GET
+ */
+
+router.get("/filter/filters", (req, res) => filterCourse(req, res));
 
 router.get("*", (req, res) => {
   try {

@@ -1,5 +1,12 @@
 import { Router } from "express";
-import { getAllUsers, getUserById, enrollCourse } from "../controllers/user.js";
+import {
+  getAllUsers,
+  getUserById,
+  enrollCourse,
+  getEnrolledCourses,
+  markCourseCompleted,
+} from "../controllers/user.js";
+import verifyCookies from "../middleware/verifyCookie.js";
 const router = Router();
 
 /**
@@ -23,14 +30,40 @@ router.get("/", (req, res) => getAllUsers(req, res));
 router.get("/:id", (req, res) => getUserById(req, res));
 
 /**
- * Route     /api/user
+ * Route     /api/user/enroll/:courseId
  * Des       Enroll into a course
- * Params    userId, courseId
- * Access    Public
+ * Params    courseId
+ * Access    Private
  * Method    PUT
  */
 
-router.put("/enroll", (req, res) => enrollCourse(req, res));
+router.put("/enroll/:courseId", verifyCookies, (req, res) =>
+  enrollCourse(req, res)
+);
+
+/**
+ * Route     /api/user/course/enrolled-courses
+ * Des       Get all enrolled courses
+ * Params    none
+ * Access    Private
+ * Method    GET
+ */
+
+router.get("/course/enrolled-courses", verifyCookies, (req, res) =>
+  getEnrolledCourses(req, res)
+);
+
+/**
+ * Route     /api/user/course/:courseId
+ * Des       Mark course as completed
+ * Params    courseId
+ * Access    Private
+ * Method    PUT
+ */
+
+router.put("/course/:courseId", verifyCookies, (req, res) =>
+  markCourseCompleted(req, res)
+);
 
 router.get("*", (req, res) => {
   try {
