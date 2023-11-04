@@ -92,3 +92,35 @@ export const likeCourse = async (req, res) => {
     return res.status(500).json({ success: false, message: error.message });
   }
 };
+
+/* Search  Courses */
+
+export const searchCourse = async (req, res) => {
+  try {
+    const { query } = req.params;
+    if (!query) {
+      throw new Error("Query is required");
+    }
+    const courses = await Course.find({
+      $or: [
+        { name: { $regex: query, $options: "i" } },
+        { instructor: { $regex: query, $options: "i" } },
+        { description: { $regex: query, $options: "i" } },
+      ],
+    });
+
+    if (courses?.length === 0) {
+      return res
+        .status(404)
+        .json({ success: false, message: "No course found" });
+    }
+
+    return res.status(200).json({ success: true, data: courses });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+/* Filter  Courses */
+
+export const filterCourse = async (req, res) => {};

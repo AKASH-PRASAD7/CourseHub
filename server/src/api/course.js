@@ -4,6 +4,7 @@ import {
   getCourseById,
   likeCourse,
   addCourse,
+  searchCourse,
 } from "../controllers/course.js";
 import verifyCookie from "../middleware/verifyCookie.js";
 const router = Router();
@@ -42,11 +43,31 @@ router.post("/", (req, res) => addCourse(req, res));
  * Route     /api/course:courseId
  * Des       Like a course
  * Params    userId, courseId
- * Access    Public
+ * Access    Private
  * Method    PUT
  */
 
 router.put("/:courseId", verifyCookie, (req, res) => likeCourse(req, res));
+
+/**
+ * Route     /api/course/search:query
+ * Des       search course by title or
+ * Params    none
+ * Access    Public
+ * Method    GET
+ */
+
+router.get("/search/:query", (req, res) => searchCourse(req, res));
+
+/**
+ * Route     /api/course/filters:query
+ * Des       Filter course by duration, open/closed, schedule
+ * Params    none
+ * Access    Public
+ * Method    GET
+ */
+
+router.get("/filters/:query", (req, res) => filterCourse(req, res));
 
 router.get("*", (req, res) => {
   try {
