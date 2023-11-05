@@ -29,7 +29,24 @@ The frontend of CourseHub is developed using React, Vite, Redux, Tailwind CSS, a
 2. Change your current working directory to the project folder:
 
    ```bash
-   cd CourseHub
+   cd client
+   ```
+
+3. Install the required dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Set up environment variables:
+
+   - Rename `sample.env` to `.env`.
+   - Add all the secrets and keys accordingly.
+
+5. Start the server:
+
+   ```bash
+   npm run dev
    ```
 
 The frontend application should now be accessible at [http://localhost:5173](http://localhost:5173).
