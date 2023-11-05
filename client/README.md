@@ -2,6 +2,10 @@
 
 CourseHub is a web application designed to showcase a list of courses and their details using React, Vite, Redux, Tailwind CSS, cookies, and various other features. The project focuses on providing users with a comprehensive platform for exploring and interacting with course information. It includes the ability to search for courses, enroll in courses, like courses, view detailed course information, and manage a user dashboard.
 
+## Screenshot
+![image](https://github.com/AKASH-PRASAD7/CourseHub/assets/110546856/7f0ec3cf-b6e9-47ef-b4a6-c0fa657c3303)
+
+
 ## Features
 
 - **Course Listing Page:** Display a list of available courses, enabling users to explore course details.
