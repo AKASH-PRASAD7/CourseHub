@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { RxAvatar, RxMagnifyingGlass } from "react-icons/rx";
+import { searchCourse, getNextCourses } from "../../redux/course/action";
+import { useDispatch, useSelector } from "react-redux";
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const [hide, setHide] = useState("hidden");
   const handleDropDown = () => {
     if (hide === "hidden") {
@@ -14,7 +17,9 @@ const Navbar = () => {
   const [search, setSearch] = useState("");
   const handleSearch = (e) => {
     setSearch(e.target.value);
-    console.log(e.target.value);
+    if (e.target.value === "") {
+      dispatch(getNextCourses(1));
+    }
   };
   return (
     <>
@@ -33,7 +38,10 @@ const Navbar = () => {
               onChange={(e) => handleSearch(e)}
               className="border-2 border-gray-100 rounded-full px-2 py-1 w-full "
             />
-            <RxMagnifyingGlass className="text-2xl text-blue-500 hover:text-blue-700 cursor-pointer font-bold absolute right-0 m-1" />
+            <RxMagnifyingGlass
+              onClick={() => dispatch(searchCourse(search))}
+              className="text-2xl text-blue-500 hover:text-blue-700 cursor-pointer font-bold absolute right-0 m-1"
+            />
           </div>
 
           <div className="relative">
@@ -43,7 +51,7 @@ const Navbar = () => {
             >
               <RxAvatar />
             </span>
-            <div className={`${hide} absolute top-10 right-0`}>
+            <div className={`${hide} absolute top-10 right-0 z-10`}>
               <ul className="bg-gray-900 text-white text-center font-semibold w-24 rounded-xl ">
                 <li className="p-2 hover:bg-lime-500 rounded-t-xl">
                   <Link to="/signin">SignIn</Link>

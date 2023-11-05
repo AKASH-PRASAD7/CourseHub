@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import Loader from "../common/Loader";
 
 const CourseComp = () => {
   const [course, setCourse] = useState(null);
@@ -50,7 +51,7 @@ const CourseComp = () => {
   }, []);
 
   if (!course) {
-    return <div>Loading...</div>; // You can display a loading message
+    return <Loader />; // You can display a loading message
   }
   const toggleAccordion = () => {
     setExpanded(!expanded);

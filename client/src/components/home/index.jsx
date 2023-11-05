@@ -8,7 +8,7 @@ const index = () => {
     <>
       <NavBar />
       <CourseContainer />
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
