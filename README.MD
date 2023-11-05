@@ -2,6 +2,10 @@
 
 CourseHub is a full-stack web application for showcasing a list of courses and their details. It provides users with the ability to explore and interact with course information, including searching for courses, enrolling in courses, liking courses, viewing detailed course information, and managing a user dashboard. The project is divided into two parts: the frontend and the server.
 
+## Screenshot
+
+![Sample Course Image](/client/src/assets/1.jpg)
+
 ## Frontend
 
 The frontend of CourseHub is developed using React, Vite, Redux, Tailwind CSS, and various other technologies. It focuses on providing a user-friendly interface for exploring and interacting with courses. It includes the following features:
