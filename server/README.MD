@@ -1,4 +1,4 @@
-# Course Management Server
+# CourseHub Server
 
 This is the server-side application for managing and providing access to courses and user information. It is built using Node.js, Express.js, and MongoDB, and includes authentication, authorization, and several APIs to manage courses, users, and enrollments.
 
