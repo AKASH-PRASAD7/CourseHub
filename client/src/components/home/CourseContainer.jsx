@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import CourseCard from "./CourseCard";
 import { useDispatch, useSelector } from "react-redux";
 import { getNextCourses } from "../../redux/course/action";
@@ -13,11 +13,20 @@ const CourseContainer = () => {
     error,
     loading,
   } = useSelector((state) => state.course);
-  console.log(data);
+
   useEffect(() => {
     dispatch(getNextCourses(1));
   }, []);
+  const [alert, setAlert] = useState(null);
 
+  const showAlert = (type, message) => {
+    setAlert({ type, message });
+
+    // Close the alert after 5 seconds
+    setTimeout(() => {
+      setAlert(null);
+    }, 5000);
+  };
   return (
     <section className="pb-8 ">
       <div className="mx-12">
@@ -36,7 +45,7 @@ const CourseContainer = () => {
         {loading ? (
           <Loader />
         ) : error ? (
-          <Alert type="error" message={error} />
+          <Alert type="error" message={error} onClose={() => setAlert(null)} />
         ) : (
           data?.map((course) => (
             <CourseCard

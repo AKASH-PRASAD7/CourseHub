@@ -1,4 +1,4 @@
-import { SIGN_IN, SIGN_UP, SIGN_OUT, LOADING, ERROR } from "./types";
+import { SIGN_IN, SIGN_UP, SIGN_OUT, LOADING, ERROR } from "./type";
 import axios from "axios";
 
 export const signIn = (formData) => async (dispatch) => {

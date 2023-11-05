@@ -1,13 +1,19 @@
 import React from "react";
 
-const Alert = ({ type, message, onClose }) => {
+const Alert = ({ type, message }) => {
+  const [show, setShow] = React.useState("");
+  const onClose = () => {
+    setShow("hidden");
+  };
   return (
-    <div className={`alert ${type}`}>
-      <p>{message}</p>
-      <button className="close-button" onClick={onClose}>
-        &times;
-      </button>
-    </div>
+    <section className="w-4/5 mx-auto">
+      <div className={`alert ${type} ${show}`}>
+        <p>{message}</p>
+        <button className={`close-button `} onClick={onClose}>
+          &times;
+        </button>
+      </div>
+    </section>
   );
 };
 

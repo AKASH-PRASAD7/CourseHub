@@ -42,7 +42,7 @@ export const enrollCourse = (courseID) => async (dispatch) => {
 
     dispatch({
       type: ENROLL_COURSE,
-      payload: res.data.payload,
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
@@ -64,7 +64,7 @@ export const markComplete = (courseID) => async (dispatch) => {
 
     dispatch({
       type: MARK_COMPLETE,
-      payload: res.data.payload,
+      payload: res.data,
     });
   } catch (error) {
     dispatch({
@@ -86,7 +86,7 @@ export const getEnrolledCourses = () => async (dispatch) => {
 
     dispatch({
       type: GET_ENROLLED_COURSES,
-      payload: res.data.payload,
+      payload: res.data,
     });
   } catch (error) {
     dispatch({

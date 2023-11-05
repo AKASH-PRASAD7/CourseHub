@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import { RxAvatar, RxMagnifyingGlass } from "react-icons/rx";
 import { searchCourse, getNextCourses } from "../../redux/course/action";
 import { useDispatch, useSelector } from "react-redux";
-
+import { useLocation } from "react-router-dom";
 const Navbar = () => {
+  const location = useLocation();
+  const { user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const [hide, setHide] = useState("hidden");
   const handleDropDown = () => {
@@ -30,7 +32,11 @@ const Navbar = () => {
               CourseHub
             </h1>
           </Link>
-          <div className="flex gap-2 w-1/2 relative">
+          <div
+            className={`flex gap-2 w-1/2 relative ${
+              location.pathname === "/" ? "block" : "hidden"
+            }`}
+          >
             <input
               type="text"
               placeholder="Search Courses"
@@ -54,11 +60,17 @@ const Navbar = () => {
             <div className={`${hide} absolute top-10 right-0 z-10`}>
               <ul className="bg-gray-900 text-white text-center font-semibold w-24 rounded-xl ">
                 <li className="p-2 hover:bg-lime-500 rounded-t-xl">
-                  <Link to="/signin">SignIn</Link>
+                  {user ? (
+                    <button>SignOut</button>
+                  ) : (
+                    <Link to="/signin">SignIn</Link>
+                  )}
                 </li>
-                <li className="p-2 hover:bg-lime-500 rounded-b-xl">
-                  <Link to="/dashboard">Dashboard</Link>
-                </li>
+                {user && (
+                  <li className="p-2 hover:bg-lime-500 rounded-b-xl">
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
+                )}
               </ul>
             </div>
           </div>

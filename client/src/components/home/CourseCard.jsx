@@ -39,7 +39,7 @@ const CourseCard = ({
         </span>
         <div className="flex pb-4 justify-center  gap-2 ">
           <Link
-            to={`course/${id}}`}
+            to={`course/${id}`}
             className="bg-indigo-800 text-center  hover:bg-indigo-900 text-white font-semibold text-xl w-5/6 h-8 rounded-full"
           >
             Course Details
